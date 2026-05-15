@@ -1,0 +1,1360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Joshua Olaniyi-Ibiloye — Data & Advanced Analytics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0B0D0F;
+    --surface: #111416;
+    --surface2: #181B1E;
+    --border: rgba(255,255,255,0.07);
+    --border2: rgba(255,255,255,0.12);
+    --text: #F0EDE8;
+    --muted: #7A8694;
+    --accent: #00E5A0;
+    --accent2: #0062FF;
+    --accent3: #FF6B35;
+    --heading: 'Syne', sans-serif;
+    --body: 'DM Sans', sans-serif;
+    --mono: 'DM Mono', monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--body);
+    font-size: 15px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 3rem;
+    background: rgba(11,13,15,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: var(--heading);
+    font-weight: 800;
+    font-size: 1.1rem;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .nav-logo span { color: var(--accent); }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  .nav-cta {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    color: var(--accent);
+    text-decoration: none;
+    border: 1px solid var(--accent);
+    padding: 0.5rem 1.25rem;
+    border-radius: 2px;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .nav-cta:hover {
+    background: var(--accent);
+    color: var(--bg);
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 3rem 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 100%, black 40%, transparent 100%);
+  }
+
+  .hero-glow {
+    position: absolute;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(0,229,160,0.08) 0%, transparent 70%);
+    top: -100px; right: -100px;
+    border-radius: 50%;
+    animation: pulse 6s ease-in-out infinite;
+  }
+
+  .hero-glow2 {
+    position: absolute;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(0,98,255,0.06) 0%, transparent 70%);
+    top: 30%; left: 20%;
+    border-radius: 50%;
+    animation: pulse 8s ease-in-out infinite reverse;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.1); opacity: 0.7; }
+  }
+
+  .hero-content { position: relative; z-index: 1; }
+
+  .hero-tag {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .hero-tag::before {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  h1 {
+    font-family: var(--heading);
+    font-weight: 800;
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+  }
+
+  h1 .outline {
+    -webkit-text-stroke: 1px rgba(240,237,232,0.3);
+    color: transparent;
+  }
+
+  .hero-desc {
+    max-width: 560px;
+    color: var(--muted);
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: var(--bg);
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    padding: 0.9rem 2rem;
+    border-radius: 2px;
+    text-decoration: none;
+    transition: opacity 0.2s, transform 0.15s;
+  }
+
+  .btn-primary:hover { opacity: 0.85; transform: translateY(-1px); }
+
+  .btn-secondary {
+    color: var(--muted);
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: color 0.2s;
+  }
+
+  .btn-secondary:hover { color: var(--text); }
+
+  .hero-stats {
+    position: absolute;
+    right: 3rem;
+    bottom: 5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    z-index: 1;
+  }
+
+  .stat {
+    text-align: right;
+  }
+
+  .stat-num {
+    font-family: var(--heading);
+    font-weight: 700;
+    font-size: 2.5rem;
+    color: var(--text);
+    letter-spacing: -0.03em;
+    line-height: 1;
+    display: block;
+  }
+
+  .stat-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* SECTIONS */
+  section { padding: 6rem 3rem; }
+
+  .section-tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .section-tag::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  h2 {
+    font-family: var(--heading);
+    font-weight: 700;
+    font-size: clamp(2rem, 4vw, 3rem);
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+    margin-bottom: 3rem;
+  }
+
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 0 3rem;
+  }
+
+  /* SKILLS */
+  #skills { background: var(--surface); }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .skill-card {
+    background: var(--surface);
+    padding: 2.5rem;
+    transition: background 0.2s;
+  }
+
+  .skill-card:hover { background: var(--surface2); }
+
+  .skill-icon {
+    width: 40px; height: 40px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    margin-bottom: 1.25rem;
+  }
+
+  .skill-icon.green { background: rgba(0,229,160,0.1); color: var(--accent); }
+  .skill-icon.blue { background: rgba(0,98,255,0.1); color: #4D8DFF; }
+  .skill-icon.orange { background: rgba(255,107,53,0.1); color: var(--accent3); }
+
+  .skill-title {
+    font-family: var(--heading);
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.01em;
+  }
+
+  .skill-desc {
+    color: var(--muted);
+    font-size: 13.5px;
+    line-height: 1.65;
+    margin-bottom: 1.25rem;
+  }
+
+  .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    border: 1px solid var(--border2);
+    padding: 0.25rem 0.6rem;
+    border-radius: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .tag:hover { color: var(--accent); border-color: rgba(0,229,160,0.3); }
+
+  /* EXPERIENCE */
+  #experience { background: var(--bg); }
+
+  .exp-list { display: flex; flex-direction: column; gap: 0; }
+
+  .exp-item {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 3rem;
+    padding: 3rem 0;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+
+  .exp-item::before {
+    content: '';
+    position: absolute;
+    left: 200px;
+    top: 0; bottom: 0;
+    width: 1px;
+    background: var(--border);
+  }
+
+  .exp-meta {
+    padding-top: 0.2rem;
+  }
+
+  .exp-company {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.4rem;
+  }
+
+  .exp-period {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  .exp-body { padding: 0 0 0 3rem; }
+
+  .exp-role {
+    font-family: var(--heading);
+    font-weight: 600;
+    font-size: 1.25rem;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+  }
+
+  .exp-bullets {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .exp-bullets li {
+    color: var(--muted);
+    font-size: 14px;
+    padding-left: 1.25rem;
+    position: relative;
+    line-height: 1.6;
+  }
+
+  .exp-bullets li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 12px;
+  }
+
+  .exp-achievements {
+    margin-top: 1.25rem;
+    padding: 1rem 1.25rem;
+    border-left: 2px solid var(--accent);
+    background: rgba(0,229,160,0.04);
+  }
+
+  .exp-achievements-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin-bottom: 0.6rem;
+  }
+
+  .exp-achievements ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .exp-achievements li {
+    font-size: 13px;
+    color: rgba(240,237,232,0.7);
+    padding-left: 1rem;
+    position: relative;
+  }
+
+  .exp-achievements li::before {
+    content: '✦';
+    position: absolute;
+    left: 0;
+    font-size: 8px;
+    top: 5px;
+    color: var(--accent);
+  }
+
+  /* PROJECTS */
+  #projects { background: var(--surface); }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .project-card {
+    background: var(--surface);
+    padding: 2rem;
+    transition: background 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .project-card:hover { background: var(--surface2); }
+
+  .project-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+  }
+
+  .project-card.c1::after { background: var(--accent); }
+  .project-card.c2::after { background: var(--accent2); }
+  .project-card.c3::after { background: var(--accent3); }
+  .project-card.c4::after { background: #A855F7; }
+  .project-card.c5::after { background: #F59E0B; }
+  .project-card.c6::after { background: #EC4899; }
+
+  .project-title {
+    font-family: var(--heading);
+    font-weight: 600;
+    font-size: 1rem;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.6rem;
+  }
+
+  .project-desc {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+
+  .project-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+
+  .project-tech span {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border: 1px solid var(--border2);
+    padding: 0.2rem 0.5rem;
+    border-radius: 2px;
+  }
+
+  /* CERTS */
+  #certs { background: var(--bg); }
+
+  .certs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+  }
+
+  .cert-card {
+    border: 1px solid var(--border);
+    padding: 1.25rem;
+    border-radius: 4px;
+    background: var(--surface);
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .cert-card:hover {
+    border-color: var(--border2);
+    background: var(--surface2);
+  }
+
+  .cert-issuer {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.4rem;
+  }
+
+  .cert-name {
+    font-size: 13.5px;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.4;
+  }
+
+  /* EDUCATION */
+  .edu-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  .edu-card {
+    border: 1px solid var(--border);
+    padding: 2rem;
+    background: var(--surface);
+  }
+
+  .edu-degree {
+    font-family: var(--heading);
+    font-weight: 600;
+    font-size: 1.05rem;
+    margin-bottom: 0.3rem;
+    letter-spacing: -0.01em;
+  }
+
+  .edu-school {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 0.2rem;
+  }
+
+  .edu-period {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  /* PUBLICATION */
+  .pub-card {
+    border: 1px solid var(--border);
+    padding: 2rem;
+    background: var(--surface);
+    margin-top: 3rem;
+  }
+
+  .pub-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent3);
+    margin-bottom: 0.6rem;
+  }
+
+  .pub-title {
+    font-family: var(--heading);
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.01em;
+  }
+
+  .pub-journal {
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 0.75rem;
+  }
+
+  .pub-link {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent2);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: opacity 0.2s;
+  }
+
+  .pub-link:hover { opacity: 0.7; }
+
+  /* CONTACT */
+  #contact { background: var(--surface); }
+
+  .contact-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .contact-text {
+    color: var(--muted);
+    font-size: 1rem;
+    line-height: 1.75;
+    margin-bottom: 2rem;
+  }
+
+  .contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    text-decoration: none;
+    color: var(--text);
+    padding: 1rem 1.25rem;
+    border: 1px solid var(--border);
+    background: var(--surface2);
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .contact-link:hover {
+    border-color: var(--accent);
+    background: rgba(0,229,160,0.04);
+  }
+
+  .contact-link-icon {
+    width: 36px; height: 36px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .contact-link-icon.green { background: rgba(0,229,160,0.1); color: var(--accent); }
+  .contact-link-icon.blue { background: rgba(0,98,255,0.1); color: #4D8DFF; }
+  .contact-link-icon.orange { background: rgba(255,107,53,0.1); color: var(--accent3); }
+
+  .contact-link-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 0.15rem;
+  }
+
+  .contact-link-value {
+    font-size: 14px;
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .contact-right h3 {
+    font-family: var(--heading);
+    font-weight: 600;
+    font-size: 1.1rem;
+    letter-spacing: -0.01em;
+    margin-bottom: 1rem;
+  }
+
+  .availability-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid rgba(0,229,160,0.3);
+    padding: 0.5rem 1rem;
+    border-radius: 2px;
+    background: rgba(0,229,160,0.06);
+    margin-bottom: 2rem;
+  }
+
+  .pulse-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: blink 2s ease-in-out infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .about-facts {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+
+  .fact {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    font-size: 14px;
+  }
+
+  .fact-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    min-width: 100px;
+  }
+
+  .fact-value { color: var(--text); }
+
+  /* FOOTER */
+  footer {
+    padding: 2rem 3rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer-copy {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+
+  .footer-brand {
+    font-family: var(--heading);
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--muted);
+    letter-spacing: -0.01em;
+  }
+
+  /* ANIMATIONS */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero { padding: 0 1.5rem 4rem; }
+    .hero-stats { right: 1.5rem; bottom: 4rem; }
+    section { padding: 4rem 1.5rem; }
+    .divider { margin: 0 1.5rem; }
+    .exp-item { grid-template-columns: 1fr; gap: 0.75rem; }
+    .exp-item::before { display: none; }
+    .exp-body { padding: 0; }
+    .edu-grid { grid-template-columns: 1fr; }
+    .contact-inner { grid-template-columns: 1fr; gap: 3rem; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#">JO<span>I</span></a>
+  <ul class="nav-links">
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#certs">Certs</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a class="nav-cta" href="mailto:jolaniyiibiloye@yahoo.com">Get in Touch →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg">
+    <div class="hero-grid"></div>
+    <div class="hero-glow"></div>
+    <div class="hero-glow2"></div>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-tag">Data & Advanced Analytics Specialist</div>
+    <h1>
+      Joshua<br>
+      Olaniyi-<span class="outline">Ibiloye</span>
+    </h1>
+    <p class="hero-desc">
+      Building end-to-end data systems that drive business growth. I design scalable ETL pipelines, predictive models, and executive BI dashboards — turning complex datasets into clear, actionable insights.
+    </p>
+    <div class="hero-actions">
+      <a class="btn-primary" href="#experience">View Experience</a>
+      <a class="btn-secondary" href="https://linkedin.com/in/joshuaolaniyiibiloye" target="_blank">LinkedIn Profile →</a>
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat">
+      <span class="stat-num">6+</span>
+      <span class="stat-label">Years Experience</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">90%</span>
+      <span class="stat-label">Efficiency Gains</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">$1.2K</span>
+      <span class="stat-label">Annual Savings</span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-tag">Capabilities</div>
+  <h2>What I Do</h2>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <div class="skill-icon green">⚡</div>
+      <div class="skill-title">Data Engineering</div>
+      <p class="skill-desc">Design and deploy scalable ETL/ELT pipelines, cloud-native data architectures, and automated workflows for real-time insights delivery.</p>
+      <div class="skill-tags">
+        <span class="tag">BigQuery</span>
+        <span class="tag">GCP Functions</span>
+        <span class="tag">MongoDB</span>
+        <span class="tag">Oracle</span>
+        <span class="tag">MySQL</span>
+        <span class="tag">SharePoint</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon blue">📊</div>
+      <div class="skill-title">Business Intelligence</div>
+      <p class="skill-desc">Build compelling, interactive dashboards and KPI frameworks that translate complex data into strategic decision-making tools for all levels.</p>
+      <div class="skill-tags">
+        <span class="tag">Power BI</span>
+        <span class="tag">Looker Studio</span>
+        <span class="tag">Tableau</span>
+        <span class="tag">Excel</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon orange">🤖</div>
+      <div class="skill-title">Machine Learning</div>
+      <p class="skill-desc">Apply clustering, regression, and classification techniques for predictive modeling, customer segmentation, and advanced analytics solutions.</p>
+      <div class="skill-tags">
+        <span class="tag">Python</span>
+        <span class="tag">Scikit-learn</span>
+        <span class="tag">Azure ML</span>
+        <span class="tag">NLP</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon green">🗄️</div>
+      <div class="skill-title">Advanced Analytics</div>
+      <p class="skill-desc">Statistical modeling, trend analysis, and data-driven strategy development to uncover patterns and drive competitive advantage.</p>
+      <div class="skill-tags">
+        <span class="tag">SQL</span>
+        <span class="tag">Python</span>
+        <span class="tag">Data Mining</span>
+        <span class="tag">Time Series</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon blue">🎓</div>
+      <div class="skill-title">Data Education</div>
+      <p class="skill-desc">Designing and delivering comprehensive data analytics curricula, mentoring analysts, and bridging the gap between theory and industry practice.</p>
+      <div class="skill-tags">
+        <span class="tag">Curriculum Design</span>
+        <span class="tag">Mentoring</span>
+        <span class="tag">Live Teaching</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon orange">🔗</div>
+      <div class="skill-title">Stakeholder Delivery</div>
+      <p class="skill-desc">Cross-functional collaboration with product, marketing, and C-suite leaders to translate business needs into analytics that drive measurable outcomes.</p>
+      <div class="skill-tags">
+        <span class="tag">Strategy</span>
+        <span class="tag">Storytelling</span>
+        <span class="tag">Presentations</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-tag">Career</div>
+  <h2>Work Experience</h2>
+
+  <div class="exp-list">
+
+    <div class="exp-item fade-up">
+      <div class="exp-meta">
+        <div class="exp-company">Parthian Partners</div>
+        <div class="exp-period">Mar 2025 – Present</div>
+      </div>
+      <div class="exp-body">
+        <div class="exp-role">Group Lead, Data & Insights</div>
+        <ul class="exp-bullets">
+          <li>Design and maintain end-to-end analytics solutions using SQL, Python, and Power BI with scalable, serverless ETL/ELT architecture for automated real-time reporting.</li>
+          <li>Develop and maintain data models, KPI frameworks, and dashboards to support business operations and enhance strategic decision-making.</li>
+          <li>Apply machine learning techniques (clustering, regression, classification) for predictive modeling and advanced customer segmentation.</li>
+          <li>Integrate analytics into decision-making across teams by delivering reproducible, data-driven insights.</li>
+        </ul>
+        <div class="exp-achievements">
+          <div class="exp-achievements-title">Key Achievements</div>
+          <ul>
+            <li>Built and deployed a zero-cost, internal self-service data portal — reduced manual reporting time significantly for Operations and Finance teams.</li>
+            <li>Enabled CX team to respond to customer requests up to 60% faster.</li>
+            <li>Saved the company over $1,200 annually by centralizing Power BI dashboard access.</li>
+            <li>Automated reporting processes, cutting turnaround time by 90%.</li>
+            <li>Delivered real-time campaign dashboards, increasing success rates by up to 40%.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-item fade-up">
+      <div class="exp-meta">
+        <div class="exp-company">AltSchool Africa</div>
+        <div class="exp-period">Sep 2023 – Present</div>
+      </div>
+      <div class="exp-body">
+        <div class="exp-role">Data Analytics Instructor</div>
+        <ul class="exp-bullets">
+          <li>Designed and delivered comprehensive lessons on data analytics via live virtual classes — covering data cleaning, EDA, SQL, Excel, Power BI, and Python.</li>
+          <li>Mentored learners on real-world projects, data storytelling, and analytical problem-solving.</li>
+          <li>Applied data-driven methods to track learner performance and continuously improve course delivery.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item fade-up">
+      <div class="exp-meta">
+        <div class="exp-company">AltSchool Africa</div>
+        <div class="exp-period">Jun 2023 – Jun 2025</div>
+      </div>
+      <div class="exp-body">
+        <div class="exp-role">Data Analyst Consultant</div>
+        <ul class="exp-bullets">
+          <li>Designed and deployed automated cloud-native ETL processes with Google Cloud Functions and BigQuery for real-time data access.</li>
+          <li>Engineered end-to-end data workflows using BigQuery, Looker Studio, and MongoDB to extract, transform, and analyze complex datasets.</li>
+          <li>Developed crucial analytical tools including an Applications Tracker, Internship Dashboard, and Revenue Tracker — improving operational efficiency by over 70%.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item fade-up">
+      <div class="exp-meta">
+        <div class="exp-company">Nutrition International</div>
+        <div class="exp-period">Jan 2025 – May 2025</div>
+      </div>
+      <div class="exp-body">
+        <div class="exp-role">Data Analytics & BI Consultant</div>
+        <ul class="exp-bullets">
+          <li>Led BI development creating and maintaining interactive Power BI dashboards with Python-based data processing.</li>
+          <li>Built data pipelines from MongoDB to transform and prepare datasets for strategic reporting.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item fade-up">
+      <div class="exp-meta">
+        <div class="exp-company">ARM Investment Managers</div>
+        <div class="exp-period">Mar 2023 – Mar 2025</div>
+      </div>
+      <div class="exp-body">
+        <div class="exp-role">Team Lead, Data & Insights</div>
+        <ul class="exp-bullets">
+          <li>Led a team of data analysts delivering timely and accurate insights to support company-wide decision-making.</li>
+          <li>Developed and implemented data-driven strategies aligned with business objectives.</li>
+          <li>Delivered actionable dashboards, reports, and presentations to all organizational levels.</li>
+        </ul>
+        <div class="exp-achievements">
+          <div class="exp-achievements-title">Key Achievements</div>
+          <ul>
+            <li>Automated Sales Performance Monitoring for real-time tracking.</li>
+            <li>Reduced operational report turnaround time by over 95%.</li>
+            <li>Developed Voice Call Analytics Solution to improve Customer Experience Score.</li>
+            <li>Implemented Drop-Off Management solutions improving FUM inflow.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-item fade-up">
+      <div class="exp-meta">
+        <div class="exp-company">Heirs General Insurance</div>
+        <div class="exp-period">Mar 2022 – Feb 2023</div>
+      </div>
+      <div class="exp-body">
+        <div class="exp-role">Senior Analyst, Data & Advanced Analytics</div>
+        <ul class="exp-bullets">
+          <li>Automated data extraction from NoSQL (MongoDB), MySQL, Oracle, and SharePoint as part of a data infrastructure modernization initiative.</li>
+          <li>Developed and deployed operational and regulatory dashboards for continuous monitoring.</li>
+          <li>Collaborated with engineers and senior leadership on process automation and data governance improvements.</li>
+        </ul>
+        <div class="exp-achievements">
+          <div class="exp-achievements-title">Key Achievements</div>
+          <ul>
+            <li>Automated Customer Risk Profiling system.</li>
+            <li>Reduced report turnaround from 48 hours to under 5 minutes.</li>
+            <li>Deployed Self-Service Reporting Module reducing turnaround time by 99%.</li>
+            <li>Developed API endpoints to streamline insurance policy queries and regulatory uploads.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-item fade-up">
+      <div class="exp-meta">
+        <div class="exp-company">First Bank Nigeria</div>
+        <div class="exp-period">Mar 2020 – Feb 2022</div>
+      </div>
+      <div class="exp-body">
+        <div class="exp-role">Visualization & Advanced Analytics Associate</div>
+        <ul class="exp-bullets">
+          <li>Designed financial and operational BI dashboards to support critical decision-making by senior executives.</li>
+          <li>Developed complex SQL and Python scripts for data processing, retrieval, and transformation.</li>
+          <li>Drove continuous improvement efforts across reporting and insights capabilities.</li>
+        </ul>
+        <div class="exp-achievements">
+          <div class="exp-achievements-title">Key Achievements</div>
+          <ul>
+            <li>Developed Customer Segmentation Model for targeted campaigns.</li>
+            <li>Deployed Data Quality Dashboard for enterprise-wide monitoring.</li>
+            <li>Conducted transaction analysis to identify upsell and cross-sell opportunities.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROJECTS -->
+<section id="projects" style="background: var(--surface);">
+  <div class="section-tag">Work</div>
+  <h2>Personal Projects</h2>
+  <div class="projects-grid">
+    <div class="project-card c1 fade-up">
+      <div class="project-title">Geo-location Class Attendance System</div>
+      <p class="project-desc">Location-based attendance tracking system for educational institutions with real-time monitoring capabilities.</p>
+      <div class="project-tech">
+        <span>PHP</span><span>MySQL</span><span>Geo-location API</span>
+      </div>
+    </div>
+    <div class="project-card c2 fade-up">
+      <div class="project-title">Graph-Based Image Segmentation Model</div>
+      <p class="project-desc">Machine learning model applying graph-based algorithms for accurate image segmentation and pattern recognition.</p>
+      <div class="project-tech">
+        <span>Python</span><span>OpenCV</span><span>Machine Learning</span>
+      </div>
+    </div>
+    <div class="project-card c3 fade-up">
+      <div class="project-title">Time Series Price Prediction</div>
+      <p class="project-desc">Forecasting model using advanced time series analysis techniques to predict financial and commodity prices.</p>
+      <div class="project-tech">
+        <span>Python</span><span>ARIMA</span><span>LSTM</span>
+      </div>
+    </div>
+    <div class="project-card c4 fade-up">
+      <div class="project-title">Sales & Inventory Management System</div>
+      <p class="project-desc">Full-featured POS terminal with inventory management, receipting, and financial reporting capabilities.</p>
+      <div class="project-tech">
+        <span>Java SE</span><span>Java Swing</span><span>MySQL</span>
+      </div>
+    </div>
+    <div class="project-card c5 fade-up">
+      <div class="project-title">Cyberbullying Detection Model</div>
+      <p class="project-desc">Comparative analysis of ML models detecting cyberbullying in text-based social media content using NLP techniques.</p>
+      <div class="project-tech">
+        <span>Python</span><span>NLP</span><span>Power BI</span><span>ML</span>
+      </div>
+    </div>
+    <div class="project-card c6 fade-up">
+      <div class="project-title">Nigeria Police Force Motor Registry BI</div>
+      <p class="project-desc">Data analytics and BI dashboards for the digitized Nigeria Police Force Central Motor Registry.</p>
+      <div class="project-tech">
+        <span>Google Looker Studio</span><span>MySQL</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CERTS -->
+<section id="certs">
+  <div class="section-tag">Credentials</div>
+  <h2>Education & Certifications</h2>
+
+  <div class="edu-grid">
+    <div class="edu-card">
+      <div class="edu-school">University of Ibadan</div>
+      <div class="edu-degree">M.Sc. Computer Science</div>
+      <div class="edu-period">2017 – 2019</div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-school">Ajayi Crowther University</div>
+      <div class="edu-degree">B.Sc. Computer Science</div>
+      <div class="edu-period">2009 – 2013</div>
+    </div>
+  </div>
+
+  <div class="certs-grid">
+    <div class="cert-card">
+      <div class="cert-issuer">Microsoft</div>
+      <div class="cert-name">Power BI Data Analyst Associate</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-issuer">Python Institute</div>
+      <div class="cert-name">PCAP — Certified Associate in Python Programming</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-issuer">HarvardX</div>
+      <div class="cert-name">PH125.8x: Data Science: Machine Learning</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-issuer">WorldQuant University</div>
+      <div class="cert-name">Applied Data Science I: Scientific Computing & Python</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-issuer">WorldQuant University</div>
+      <div class="cert-name">Applied Data Science II: ML & Statistical Analysis</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-issuer">Udemy</div>
+      <div class="cert-name">Azure Machine Learning</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-issuer">LinkedIn</div>
+      <div class="cert-name">Applied Machine Learning: Algorithms</div>
+    </div>
+  </div>
+
+  <div class="pub-card">
+    <div class="pub-label">Publication · Feb 2024</div>
+    <div class="pub-title">Blind Image Clustering Using Contaminated Sensor Pattern Noise</div>
+    <div class="pub-journal">University of Ibadan Journal of Science and Logics in ICT Research</div>
+    <a class="pub-link" href="https://journals.ui.edu.ng/index.php/uijslictr/article/view/1311" target="_blank">
+      View Publication ↗
+    </a>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-tag">Connect</div>
+  <h2>Get in Touch</h2>
+  <div class="contact-inner">
+    <div>
+      <p class="contact-text">
+        Open to senior data analytics, data engineering, and leadership opportunities. Whether you're looking for someone to architect your data infrastructure, build intelligence systems, or lead a data team — let's talk.
+      </p>
+      <div class="contact-links">
+        <a class="contact-link" href="mailto:jolaniyiibiloye@yahoo.com">
+          <div class="contact-link-icon green">✉</div>
+          <div>
+            <span class="contact-link-label">Email</span>
+            <span class="contact-link-value">jolaniyiibiloye@yahoo.com</span>
+          </div>
+        </a>
+        <a class="contact-link" href="tel:+2348068685952">
+          <div class="contact-link-icon blue">📞</div>
+          <div>
+            <span class="contact-link-label">Phone</span>
+            <span class="contact-link-value">+234 80 6868 5952</span>
+          </div>
+        </a>
+        <a class="contact-link" href="https://linkedin.com/in/joshuaolaniyiibiloye" target="_blank">
+          <div class="contact-link-icon orange">in</div>
+          <div>
+            <span class="contact-link-label">LinkedIn</span>
+            <span class="contact-link-value">linkedin.com/in/joshuaolaniyiibiloye</span>
+          </div>
+        </a>
+        <a class="contact-link" href="https://credly.com/users/jo5h" target="_blank">
+          <div class="contact-link-icon green">🏅</div>
+          <div>
+            <span class="contact-link-label">Credentials</span>
+            <span class="contact-link-value">credly.com/users/jo5h</span>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="contact-right">
+      <div class="availability-badge">
+        <div class="pulse-dot"></div>
+        Available for opportunities
+      </div>
+      <h3>Quick Facts</h3>
+      <div class="about-facts">
+        <div class="fact">
+          <span class="fact-label">Location</span>
+          <span class="fact-value">Lagos, Nigeria</span>
+        </div>
+        <div class="fact">
+          <span class="fact-label">Experience</span>
+          <span class="fact-value">6+ Years in Data Analytics</span>
+        </div>
+        <div class="fact">
+          <span class="fact-label">Current Role</span>
+          <span class="fact-value">Group Lead, Data & Insights</span>
+        </div>
+        <div class="fact">
+          <span class="fact-label">Current Org</span>
+          <span class="fact-value">Parthian Partners Limited</span>
+        </div>
+        <div class="fact">
+          <span class="fact-label">Education</span>
+          <span class="fact-value">M.Sc. Computer Science</span>
+        </div>
+        <div class="fact">
+          <span class="fact-label">Languages</span>
+          <span class="fact-value">English, Yoruba, Hausa</span>
+        </div>
+        <div class="fact">
+          <span class="fact-label">Published</span>
+          <span class="fact-value">UI Journal of ICT Research</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-copy">© 2026 Joshua Olaniyi-Ibiloye. All rights reserved.</span>
+  <span class="footer-brand">Data & Advanced Analytics</span>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(link.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+</script>
+</body>
+</html>
